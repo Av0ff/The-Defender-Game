@@ -3,24 +3,43 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     [SerializeField]
-    private float _speed;
+    private SpriteRenderer _characterSprite;
 
-    private Rigidbody2D _rigidbodyCharacter;
+    [SerializeField]
+    private Animator _animator;
 
-    private Vector2 _NewPositionCharacter;
+    [SerializeField]
+    private PhysicsMovement _movement;
 
-    void Start()
+  
+    void FixedUpdate()
     {
-        _rigidbodyCharacter = GetComponent<Rigidbody2D>();
+        MoveAnimation();
+        float horizontal = Input.GetAxis("Horizontal");
+
+        _movement.Move(new Vector2 (horizontal,0));
     }
-    void Update()
-    {
-        Move(_speed);
-    }
-    private void Move(float speed)
-    {
 
-        _NewPositionCharacter = new Vector2(transform.position.x + Input.GetAxisRaw("Horizontal") * speed, transform.position.y + 0);
-        _rigidbodyCharacter.MovePosition(_NewPositionCharacter);
+    private void MoveAnimation()
+    {
+        float moveInputHorizontal = Input.GetAxis("Horizontal");
+        
+        if (moveInputHorizontal < 0)
+        {
+            _characterSprite.flipX = true;
+        }
+        else
+        {
+            _characterSprite.flipX = false;
+        }
+
+        if(moveInputHorizontal == 0)
+        {
+            _animator.SetBool("IsRunning", false);
+        }
+        else
+        {
+            _animator.SetBool("IsRunning", true);
+        }
     }
 }
