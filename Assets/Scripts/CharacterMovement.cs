@@ -12,7 +12,7 @@ public class CharacterMovement : MonoBehaviour
     private PhysicsMovement _movement;
 
   
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         MoveAnimation();
         float horizontal = Input.GetAxis("Horizontal");
