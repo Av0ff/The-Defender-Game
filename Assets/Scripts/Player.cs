@@ -9,6 +9,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Pistol _pistol;
 
+    [SerializeField]
+    private Shotgun _shotgun;
+
     public void Damage(Bullet bullet)
     {
         _health -= bullet.Damage;
@@ -27,12 +30,12 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Shoot(_pistol);
+            Shoot(_shotgun);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            _pistol.Reload();
+            _shotgun.Reload();
         }
     }
 
