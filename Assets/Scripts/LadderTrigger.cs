@@ -7,7 +7,7 @@ public class LadderTrigger : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(Input.GetAxis("Vertical") != 0)
+        if(Input.GetAxis("Vertical") != 0 && collision.GetComponent<Player>())
         {
             var vertical = Input.GetAxisRaw("Vertical");
             collision.transform.Translate(new Vector3(0, vertical, 0) * Time.deltaTime);
@@ -18,7 +18,11 @@ public class LadderTrigger : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _ladderFloor.SetActive(true);
-        collision.GetComponent<Rigidbody2D>().gravityScale = 5;
+        if(collision.GetComponent<Player>())
+        {
+            _ladderFloor.SetActive(true);
+            collision.GetComponent<Rigidbody2D>().gravityScale = 5;
+        }
+
     }
 }

@@ -10,7 +10,7 @@ public class TriggerStairs : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && collision.GetComponent<Player>())
         {
             _stairs.SetActive(true);
             _secondFloor.SetActive(false);
@@ -19,7 +19,10 @@ public class TriggerStairs : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _stairs.SetActive(false);
-        _secondFloor.SetActive(true);
+        if (collision.GetComponent<Player>())
+        {
+            _stairs.SetActive(false);
+            _secondFloor.SetActive(true);
+        }
     }
 }

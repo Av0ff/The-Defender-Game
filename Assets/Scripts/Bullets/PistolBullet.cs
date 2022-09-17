@@ -4,7 +4,7 @@ public class PistolBullet : Bullet
 {
     public override int Damage => 10;
 
-    public override float BulletSpeed => 200f;
+    public override float BulletSpeed => 500f;
 
     private void Start()
     {
