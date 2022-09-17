@@ -2,26 +2,37 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int Health { get; } = 100;
+    private int _health = 100;
 
     public static float Speed { get; } = 5;
 
-    
-    public void Damage(int damage)
-    {
+    [SerializeField]
+    private Pistol _pistol;
 
+    public void Damage(Bullet bullet)
+    {
+        _health -= bullet.Damage;
     }
 
-    public void Shoot()
+    public void Shoot(Weapon weapon)
     {
-
+        if(weapon.CurrentAmmunition > 0)
+        {
+            weapon.Fire();
+        }
+        
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Shoot();
+            Shoot(_pistol);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            _pistol.Reload();
         }
     }
 

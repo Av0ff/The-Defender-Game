@@ -5,8 +5,6 @@ public class LadderTrigger : MonoBehaviour
     [SerializeField]
     private GameObject _ladderFloor;
 
-    private bool _isMoving;
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(Input.GetAxis("Vertical") != 0)
@@ -21,7 +19,6 @@ public class LadderTrigger : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         _ladderFloor.SetActive(true);
-        _isMoving = false;
         collision.GetComponent<Rigidbody2D>().gravityScale = 5;
     }
 }
