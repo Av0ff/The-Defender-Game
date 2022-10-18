@@ -2,6 +2,8 @@
 
 public abstract class Weapon : MonoBehaviour
 {
+    public abstract int ID { get; }
+
     public abstract int AmmunitionVolume { get;}
 
     public abstract int CurrentAmmunition { get; set; }

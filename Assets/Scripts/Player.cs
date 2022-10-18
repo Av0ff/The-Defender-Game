@@ -1,16 +1,30 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player player;
+
     private int _health = 100;
 
     public static float Speed { get; } = 5;
 
     [SerializeField]
-    private Pistol _pistol;
+    private List<Weapon> _weapons;
 
-    [SerializeField]
-    private Shotgun _shotgun;
+    private Weapon _currentWeapon;
+
+    private int _ID = -1;
+
+    private void Start()
+    {
+        player = this;
+
+        foreach(Weapon current in _weapons)
+        {
+            current.gameObject.SetActive(false);
+        }
+    }
 
     public void Damage(Bullet bullet)
     {
@@ -19,24 +33,46 @@ public class Player : MonoBehaviour
 
     public void Shoot(Weapon weapon)
     {
-        if(weapon.CurrentAmmunition > 0)
+        if(weapon.CurrentAmmunition > 0 && weapon.isActiveAndEnabled)
         {
             weapon.Fire();
         }
-        
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (SelectWeapon())
         {
-            Shoot(_shotgun);
+            if (Input.GetMouseButtonDown(0))
+            {
+                Shoot(_currentWeapon);
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                _currentWeapon.Reload();
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+    }
+
+    public void SelectWeaponId(int selectedWeapon)
+    {
+        _ID = selectedWeapon;
+    }
+
+    private bool SelectWeapon()
+    {
+        foreach(Weapon weapon in _weapons)
         {
-            _shotgun.Reload();
+            if (_ID == weapon.ID)
+            {
+                _currentWeapon = weapon;
+                _currentWeapon.gameObject.SetActive(true);
+                return true;
+            }
         }
+        return false;
     }
 
     /*1 класс: оружие

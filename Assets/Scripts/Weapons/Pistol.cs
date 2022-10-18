@@ -5,6 +5,8 @@ public class Pistol : Weapon
     [SerializeField]
     private PistolBullet _pBullet;
 
+    public override int ID => 0;
+
     public override int AmmunitionVolume => 20;
 
     public override int CurrentAmmunition { get; set; } = 20;
