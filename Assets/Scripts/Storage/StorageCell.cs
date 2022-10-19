@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class StorageCell : MonoBehaviour, IPointerDownHandler
+public class StorageCell : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField]
     private Image _iconField;
@@ -11,16 +10,37 @@ public class StorageCell : MonoBehaviour, IPointerDownHandler
     [SerializeField]
     private int _idWeapon;
 
+    private void OnEnable()
+    {
+        //Storage.OnItemRemove += RemItem;
+        //Storage.OnItemAdd += AdItem;
+        //GetComponent<Image>().enabled = false;
+    }
+
     public void Render(IItem item)
     {
         _iconField.sprite = item.UIIcon;
         _idWeapon = item.ID;
     }
 
-    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("AAAa");
         Player.player.SelectWeaponId(_idWeapon);
-        gameObject.SetActive(false);
+    }
+
+    public void RemItem()
+    {
+        GetComponent<Image>().enabled = false;
+    }
+
+    public void AdItem()
+    {
+        GetComponent<Image>().enabled = true;
+    }
+
+    private void OnDisable()
+    {
+    //    Storage.OnItemRemove -= RemItem;
+    //    Storage.OnItemAdd -= AdItem;
     }
 }

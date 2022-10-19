@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 
     private Weapon _currentWeapon;
 
+    [SerializeField]
     private int _ID = -1;
 
     private void Start()
@@ -67,9 +68,19 @@ public class Player : MonoBehaviour
         {
             if (_ID == weapon.ID)
             {
+                if (_currentWeapon != null)
+                    Storage.storageCells[_currentWeapon.ID].AdItem();
+                _currentWeapon?.gameObject.SetActive(false);
                 _currentWeapon = weapon;
                 _currentWeapon.gameObject.SetActive(true);
+                Storage.storageCells[_ID].RemItem();
                 return true;
+            }
+            else
+            {
+                weapon.gameObject.SetActive(false);
+                if (_ID != -1)
+                    Storage.storageCells[_ID].AdItem();
             }
         }
         return false;
