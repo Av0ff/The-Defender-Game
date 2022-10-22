@@ -5,9 +5,9 @@ public class Player : MonoBehaviour
 {
     public static Player player;
 
-    private int _health = 100;
+    public int Health { get; private set; } = 100;
 
-    public static float Speed { get; } = 5;
+    public float Speed { get; } = 5;
 
     [SerializeField]
     private List<Weapon> _weapons;
@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
 
     public void Damage(Bullet bullet)
     {
-        _health -= bullet.Damage;
+        Health -= bullet.Damage;
     }
 
     public void Shoot(Weapon weapon)
